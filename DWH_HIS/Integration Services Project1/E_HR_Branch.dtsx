@@ -1,0 +1,2138 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/11/2021 3:27:16 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QJCKCTC"
+  DTS:CreatorName="DESKTOP-QJCKCTC\Admin"
+  DTS:DTSID="{66303155-9C5B-4D27-B421-62083BB641F2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="E_HR_Branch"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="34"
+  DTS:VersionGUID="{A22DEFF4-184F-49D1-A962-A15E027358E1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ETLControl]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+      DTS:ObjectName="ETLControl">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::ETLControl]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_ETLControl;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source_HIS]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{FFD7157B-A5FD-4928-9649-2DF20FF2A542}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_HIS]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.96.11.25;Uid=ticketuser;Port=3306;Database=pos;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source_HR]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{993806E5-1EA1-43A5-8292-8EFD847104CA}"
+      DTS:ObjectName="Source_HR">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_HR]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.96.11.25;Uid=ticketuser;Port=3306;Database=in;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EDDAAD49-5953-4B56-9B81-5FAB2159DF3F}"
+      DTS:ObjectName="Staging">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Staging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_Staging;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{499E2C47-A994-42FF-9A14-5218AA836927}"
+      DTS:ObjectName="ETLControl">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_ETLControl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{50BCC6FF-6FDB-490D-A54A-95BD5645FBA7}"
+      DTS:ObjectName="ExtractSeq">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">123</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{AD8B69E9-BACD-41E4-82B1-6AA8E25F1744}"
+      DTS:ObjectName="SourceName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">HR</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{39A51D1A-48A8-4081-865A-7D3508F18443}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=pos;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{1E89D547-8A1B-4439-A172-A42DE164ADA8}"
+      DTS:ObjectName="Source_HR">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=in;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6D90012D-0F88-4A3D-9566-83D8E988D4F5}"
+      DTS:ObjectName="Staging">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Staging;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{42DD017E-8152-48CF-8DF5-2D442B8D5B18}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CurrentTime">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF4D778E-6391-4433-B5BD-378FEF77D676}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Deleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A55CF5D7-3857-4703-9BD9-87B0E66245AB}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ExtractSeq] != @[User::LastExtractSeq]?&quot;Package Ended&quot;:&quot;Package Ended.No work done!&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EndPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Ended</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C3C69E8B-2756-4264-9AC8-DB3328EAF832}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ErrorPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Error</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E4A26275-5A34-4D10-975F-71B8B37E0E33}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ExtractSeq]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractSeq">
+      <DTS:VariableValue
+        DTS:DataType="8">123</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{74627252-50DE-466F-BCC9-AA8329EFA72F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Inserted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{04B1B93A-8F7D-4C7F-ABE6-5AFC7FF92106}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="IsActive">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7A0D3BD3-7358-4687-87A8-520093B0B2BF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastExtractSeq">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BD45E960-DACF-46BF-88D9-847647A8095F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastRun">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{054E40E9-97AB-4C8B-8ABE-1AB66A1DB250}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[System::PackageName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PackageName">
+      <DTS:VariableValue
+        DTS:DataType="8">E_HR_Branch</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{244550BE-C1CB-4B10-B535-267632D7F072}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::SourceName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceName">
+      <DTS:VariableValue
+        DTS:DataType="8">HR</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4837F38F-2480-4599-89BA-5D367C702B3B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StartPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Started</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C64AE9AA-D7DC-492F-BC2F-F49820B5F6C2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Updated">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SC - AnatomyBodyPartItem"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{88D8DBB3-95A6-42D8-8EC7-0A2EB5A6728A}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SC - AnatomyBodyPartItem">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{FB3A094D-507A-4DBD-806C-7476D752A2D0}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DF - Staging - Branch"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+                  name="ADO NET Source"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement used by the component to extract data."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT BranchId,
+	BranchCode,
+    Name,
+    Address,
+    CompanyId,
+    PublicPhoneNumber,
+    PrivatePhoneNumber,
+    PhoneExts,
+    OpenAt,
+    CloseAt,
+    State
+ 
+FROM Branch</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">30</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                      name="AllowImplicitStringConversion">true</property>
+                    <property
+                      dataType="System.String"
+                      description="The Source database table name."
+                      expressionType="Notify"
+                      name="TableOrViewName"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the mode to retrieve external column information"
+                      name="AccessMode"
+                      typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Connections[IDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Source_HR]"
+                      connectionManagerRefId="Package.ConnectionManagers[Source_HR]"
+                      description="Managed connection manager"
+                      name="IDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output]"
+                      name="ADO NET Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchId]"
+                          dataType="ui4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[BranchId]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchId]"
+                          name="BranchId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchCode]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[BranchCode]"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchCode]"
+                          name="BranchCode"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Name]"
+                          length="128"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Name]"
+                          name="Name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Address]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Address]"
+                          length="256"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Address]"
+                          name="Address"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CompanyId]"
+                          dataType="ui4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CompanyId]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CompanyId]"
+                          name="CompanyId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PublicPhoneNumber]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PublicPhoneNumber]"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PublicPhoneNumber]"
+                          name="PublicPhoneNumber"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PrivatePhoneNumber]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PrivatePhoneNumber]"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PrivatePhoneNumber]"
+                          name="PrivatePhoneNumber"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PhoneExts]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PhoneExts]"
+                          length="64"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PhoneExts]"
+                          name="PhoneExts"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[OpenAt]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[OpenAt]"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[OpenAt]"
+                          name="OpenAt"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CloseAt]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CloseAt]"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CloseAt]"
+                          name="CloseAt"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[State]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]"
+                          name="State"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[BranchId]"
+                          dataType="ui4"
+                          name="BranchId" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[BranchCode]"
+                          dataType="wstr"
+                          length="16"
+                          name="BranchCode" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Name]"
+                          dataType="wstr"
+                          length="128"
+                          name="Name" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Address]"
+                          dataType="wstr"
+                          length="256"
+                          name="Address" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CompanyId]"
+                          dataType="ui4"
+                          name="CompanyId" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PublicPhoneNumber]"
+                          dataType="wstr"
+                          length="16"
+                          name="PublicPhoneNumber" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PrivatePhoneNumber]"
+                          dataType="wstr"
+                          length="16"
+                          name="PrivatePhoneNumber" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PhoneExts]"
+                          dataType="wstr"
+                          length="64"
+                          name="PhoneExts" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[OpenAt]"
+                          dataType="wstr"
+                          length="8"
+                          name="OpenAt" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CloseAt]"
+                          dataType="wstr"
+                          length="8"
+                          name="CloseAt" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[State]"
+                          dataType="i4"
+                          name="State" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                      isErrorOut="true"
+                      name="ADO NET Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[BranchId]"
+                          dataType="ui4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[BranchId]"
+                          name="BranchId" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[BranchCode]"
+                          dataType="wstr"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[BranchCode]"
+                          name="BranchCode" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Name]"
+                          dataType="wstr"
+                          length="128"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Name]"
+                          name="Name" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Address]"
+                          dataType="wstr"
+                          length="256"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Address]"
+                          name="Address" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CompanyId]"
+                          dataType="ui4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CompanyId]"
+                          name="CompanyId" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PublicPhoneNumber]"
+                          dataType="wstr"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PublicPhoneNumber]"
+                          name="PublicPhoneNumber" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PrivatePhoneNumber]"
+                          dataType="wstr"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PrivatePhoneNumber]"
+                          name="PrivatePhoneNumber" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PhoneExts]"
+                          dataType="wstr"
+                          length="64"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PhoneExts]"
+                          name="PhoneExts" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[OpenAt]"
+                          dataType="wstr"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[OpenAt]"
+                          name="OpenAt" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CloseAt]"
+                          dataType="wstr"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CloseAt]"
+                          name="CloseAt" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[State]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[State]"
+                          name="State" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input].Columns[StateNew]"
+                          cachedDataType="wstr"
+                          cachedLength="11"
+                          cachedName="StateNew"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[StateNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input].Columns[CompanyId]"
+                          cachedDataType="ui4"
+                          cachedName="CompanyId"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CompanyId]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output].Columns[StateConvert]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="11"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output].Columns[StateConvert]"
+                          name="StateConvert"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[StateNew]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output].Columns[CompanyConvert]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output].Columns[CompanyConvert]"
+                          name="CompanyConvert"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CompanyId]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Derived Column"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[BranchCode]"
+                          cachedDataType="wstr"
+                          cachedLength="16"
+                          cachedName="BranchCode"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchCode]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[Address]"
+                          cachedDataType="wstr"
+                          cachedLength="256"
+                          cachedName="Address"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Address]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[PublicPhoneNumber]"
+                          cachedDataType="wstr"
+                          cachedLength="16"
+                          cachedName="PublicPhoneNumber"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PublicPhoneNumber]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[PrivatePhoneNumber]"
+                          cachedDataType="wstr"
+                          cachedLength="16"
+                          cachedName="PrivatePhoneNumber"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PrivatePhoneNumber]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[PhoneExts]"
+                          cachedDataType="wstr"
+                          cachedLength="64"
+                          cachedName="PhoneExts"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PhoneExts]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[OpenAt]"
+                          cachedDataType="wstr"
+                          cachedLength="8"
+                          cachedName="OpenAt"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[OpenAt]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[CloseAt]"
+                          cachedDataType="wstr"
+                          cachedLength="8"
+                          cachedName="CloseAt"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CloseAt]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input].Columns[State]"
+                          cachedDataType="i4"
+                          cachedName="State"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[Source]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="10"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[Source]"
+                          name="Source"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,10,1252)@[User::SourceName]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,10,1252)@[User::SourceName]</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[ExtractSeq]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="20"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[ExtractSeq]"
+                          name="ExtractSeq"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,20,1252)@[User::ExtractSeq]</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,20,1252)@[User::ExtractSeq]</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[BranchCodeNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="16"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[BranchCodeNew]"
+                          name="BranchCodeNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,16,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchCode]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,16,1252)BranchCode</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PublicPhoneNumberNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="20"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PublicPhoneNumberNew]"
+                          name="PublicPhoneNumberNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,20,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PublicPhoneNumber]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,20,1252)PublicPhoneNumber</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PrivatePhoneNumberNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="20"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PrivatePhoneNumberNew]"
+                          name="PrivatePhoneNumberNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,20,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PrivatePhoneNumber]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,20,1252)PrivatePhoneNumber</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PhoneExtsNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="80"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PhoneExtsNew]"
+                          name="PhoneExtsNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,80,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[PhoneExts]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,80,1252)PhoneExts</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[OpenAtNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[OpenAtNew]"
+                          name="OpenAtNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,8,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[OpenAt]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,8,1252)OpenAt</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[CloseAtNew]"
+                          codePage="1252"
+                          dataType="str"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="8"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[CloseAtNew]"
+                          name="CloseAtNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">(DT_STR,8,1252)#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CloseAt]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">(DT_STR,8,1252)CloseAt</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[StateNew]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="11"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[StateNew]"
+                          name="StateNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]} == 1 ? "Active" : (#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[State]} == 2 ? "Inactive" : "OpeningSoon")</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">State == 1 ? "Active" : (State == 2 ? "Inactive" : "OpeningSoon")</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[AddressNew]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[AddressNew]"
+                          name="AddressNew"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[SUBSTRING](#{Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Address]},1,255)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">SUBSTRING(Address,1,255)</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[hr].[Branch]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Staging]"
+                      connectionManagerRefId="Package.ConnectionManagers[Staging]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Name]"
+                          cachedDataType="wstr"
+                          cachedLength="128"
+                          cachedName="Name"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[Name]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Source]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="10"
+                          cachedName="Source"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Source]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[Source]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ExtractSeq]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="20"
+                          cachedName="ExtractSeq"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ExtractSeq]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[ExtractSeq]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BranchId]"
+                          cachedDataType="ui4"
+                          cachedName="BranchId"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BranchId]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[BranchId]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CompanyId]"
+                          cachedDataType="ui4"
+                          cachedName="CompanyId"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CompanyId]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output].Columns[CompanyId]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PublicPhoneNumberNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="20"
+                          cachedName="PublicPhoneNumberNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PublicPhoneNumber]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PublicPhoneNumberNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PrivatePhoneNumberNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="20"
+                          cachedName="PrivatePhoneNumberNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PrivatePhoneNumber]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PrivatePhoneNumberNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PhoneExtsNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="80"
+                          cachedName="PhoneExtsNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneExts]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[PhoneExtsNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BranchCodeNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="16"
+                          cachedName="BranchCodeNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BranchCode]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[BranchCodeNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OpenAtNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8"
+                          cachedName="OpenAtNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OpenAt]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[OpenAtNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CloseAtNew]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="8"
+                          cachedName="CloseAtNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CloseAt]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[CloseAtNew]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[StateConvert]"
+                          cachedCodepage="1252"
+                          cachedDataType="str"
+                          cachedLength="11"
+                          cachedName="StateConvert"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output].Columns[StateConvert]" />
+                        <inputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AddressNew]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="AddressNew"
+                          externalMetadataColumnId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output].Columns[AddressNew]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Name" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Source]"
+                          codePage="1252"
+                          dataType="str"
+                          length="10"
+                          name="Source" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ExtractSeq]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="ExtractSeq" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ExtractTime]"
+                          dataType="dbTimeStamp"
+                          name="ExtractTime" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BranchId]"
+                          dataType="i4"
+                          name="BranchId" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BranchCode]"
+                          codePage="1252"
+                          dataType="str"
+                          length="16"
+                          name="BranchCode" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Address]"
+                          dataType="wstr"
+                          length="255"
+                          name="Address" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CompanyId]"
+                          dataType="i4"
+                          name="CompanyId" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PublicPhoneNumber]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="PublicPhoneNumber" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PrivatePhoneNumber]"
+                          codePage="1252"
+                          dataType="str"
+                          length="20"
+                          name="PrivatePhoneNumber" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PhoneExts]"
+                          codePage="1252"
+                          dataType="str"
+                          length="80"
+                          name="PhoneExts" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OpenAt]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="OpenAt" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CloseAt]"
+                          codePage="1252"
+                          dataType="str"
+                          length="8"
+                          name="CloseAt" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          codePage="1252"
+                          dataType="str"
+                          length="30"
+                          name="State" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::Inserted</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[ADO NET Source Output]"
+                  endId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Inputs[Derived Column Input]"
+                  name="ADO NET Source Output"
+                  startId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source.Outputs[ADO NET Source Output]" />
+                <path
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Data Conversion Output]"
+                  endId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count.Inputs[Row Count Input 1]"
+                  name="Data Conversion Output"
+                  startId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Derived Column Output]"
+                  endId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Derived Column Output"
+                  startId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Row Count Output 1]"
+                  endId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count.Outputs[Row Count Output 1]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - AnatomyBodyPartItem\SQL - Truncate Branch"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{46D89593-A9AB-4481-8B49-7FE89FFF8583}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Truncate Branch"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{EDDAAD49-5953-4B56-9B81-5FAB2159DF3F}"
+              SQLTask:SqlStatementSource="Truncate table hr.Branch" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - AnatomyBodyPartItem\SQL - Update LastRun,Status"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{F374C7B2-0F42-4E13-84AC-346555EBA18B}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Update LastRun,Status"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+              SQLTask:SqlStatementSource="UPDATE [dbo].[ExtractCtrl]&#xA;SET LastRun = ?,LastStatus = 'S', [LastExtractSeq] = ?&#xA;WHERE PackageName = ? AND SourceName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::CurrentTime"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::ExtractSeq"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="128" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="User::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="30" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - AnatomyBodyPartItem.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{4ABDAA0F-AE9F-4A94-81F8-F1B69972B19D}"
+          DTS:From="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SC - AnatomyBodyPartItem\SQL - Update LastRun,Status" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - AnatomyBodyPartItem.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{B10CE912-0675-4134-8B6C-59D0556F97B8}"
+          DTS:From="Package\SC - AnatomyBodyPartItem\SQL - Truncate Branch"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Extract_Branch"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DEBC1C8B-5083-4469-A8E4-6869B1DDC0C1}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Extract_Branch"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+          SQLTask:SqlStatementSource="INSERT INTO [dbo].[ExtractCtrlLog]&#xA;           (&#xA;&#x9;&#x9;&#x9;&#x9;[PackageName]&#xA;&#x9;&#x9;&#x9;&#x9;,[SourceName]&#xA;&#x9;&#x9;&#x9;&#x9;,[StartTime]&#xA;&#x9;&#x9;&#x9;&#x9;,[Status]&#xA;&#x9;&#x9;&#x9;&#x9;,[Inserted]&#xA;&#x9;&#x9;&#x9;&#x9;,[Updated]&#xA;&#x9;&#x9;&#x9;&#x9;,[Deleted]&#xA;&#x9;&#x9;&#x9;&#x9;,[ExtractSeq]&#xA;&#x9;&#x9;&#x9;&#x9;,[Note]&#xA;&#x9;&#x9;&#x9;)&#xA;     VALUES&#xA;           (&#xA;&#x9;&#x9;&#x9;&#x9;?&#xA;&#x9;&#x9;&#x9;&#x9;,?&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;,GETDATE()&#xA;&#x9;&#x9;&#x9;&#x9;,'S'&#xA;&#x9;&#x9;&#x9;&#x9;,?&#xA;&#x9;&#x9;&#x9;&#x9;,?&#xA;&#x9;&#x9;&#x9;&#x9;,?&#xA;&#x9;&#x9;&#x9;&#x9;,?&#xA;&#x9;&#x9;&#x9;&#x9;,?&#xA;&#x9;&#x9;   )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="128" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="50" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::Inserted"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::Updated"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="4"
+            SQLTask:DtsVariableName="User::Deleted"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="5"
+            SQLTask:DtsVariableName="User::ExtractSeq"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="20" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="6"
+            SQLTask:DtsVariableName="User::StartPkgNote"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="250" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Extract_Branch - End"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6245147C-7244-4BD2-83D6-98CCA366A07F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Extract_Branch - End"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+          SQLTask:SqlStatementSource="INSERT INTO [dbo].[ExtractCtrlLog]&#xA;           (&#xA;    [PackageName]&#xA;    ,[SourceName]  &#xA;    ,[EndTime]&#xA;    ,[Status]&#xA;    ,[Inserted]&#xA;    ,[Updated]&#xA;    ,[Deleted]&#xA;    ,[ExtractSeq]&#xA;    ,[Note]&#xA;   )&#xA;     VALUES&#xA;           (&#xA;    ?&#xA;    ,?&#xA;    ,GETDATE()&#xA;    ,'S'&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;     )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::SourceName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::Inserted"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::Updated"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="4"
+            SQLTask:DtsVariableName="User::Deleted"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="5"
+            SQLTask:DtsVariableName="User::ExtractSeq"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="6"
+            SQLTask:DtsVariableName="User::EndPkgNote"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL - Get LastRun and CurrentTime - Start"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{85743096-2B5F-4DD3-A2F1-84F8651AEFFA}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL - Get LastRun and CurrentTime - Start"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+          SQLTask:SqlStatementSource="SELECT CONVERT(VARCHAR,LastRun,121) AS LastRun, CONVERT(VARCHAR,GETDATE(),121) AS CurrentTime,LastExtractSeq,IsActive&#xA;FROM [dbo].[ExtractCtrl]&#xA;WHERE PackageName = ? AND SourceName = ?"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="CurrentTime"
+            SQLTask:DtsVariableName="User::CurrentTime" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastRun"
+            SQLTask:DtsVariableName="User::LastRun" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastExtractSeq"
+            SQLTask:DtsVariableName="User::LastExtractSeq" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="IsActive"
+            SQLTask:DtsVariableName="User::IsActive" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::PackageName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="128" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Package::SourceName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="50" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{93E74D3D-DD64-46BD-A256-99204AD92811}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[$Package::ExtractSeq] != @[User::LastExtractSeq]  &amp;&amp;   @[User::IsActive]"
+      DTS:From="Package\SQL - Get LastRun and CurrentTime - Start"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQL - Extract_Branch" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{12E1512B-BABB-4E1C-A21E-C73C727E55D0}"
+      DTS:From="Package\SQL - Extract_Branch"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SC - AnatomyBodyPartItem" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5D75BA42-6A40-4B9C-8DBA-079E51361464}"
+      DTS:From="Package\SC - AnatomyBodyPartItem"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL - Extract_Branch - End" />
+  </DTS:PrecedenceConstraints>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{E9A4FF8E-EE1D-4922-8B8A-4222B10E8235}"
+      DTS:EventID="410"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{ABEB6B28-24DD-40E9-96E4-B5C087220740}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL - Extract_Enum - ErrorLog"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{CE6D481E-1B7C-4D1C-869C-9731A177A348}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Extract_Enum - ErrorLog"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+              SQLTask:SqlStatementSource="INSERT INTO [dbo].[ExtractCtrlLog]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="128" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="User::Inserted"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="2"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="User::Updated"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="2"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="4"
+                SQLTask:DtsVariableName="User::Deleted"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="2"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="5"
+                SQLTask:DtsVariableName="User::ExtractSeq"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="20" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="6"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="4000" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="7"
+                SQLTask:DtsVariableName="User::StartPkgNote"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="250" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL - Extract_Enum - FailStatus"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{284AF1D4-38B1-47D0-8523-BDE337BD5B80}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Extract_Enum - FailStatus"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{971BC772-9271-4625-B5F1-3DB79E8CD83C}"
+              SQLTask:SqlStatementSource="UPDATE [dbo].[ExtractCtrl]&#xA;SET LastStatus = 'F'&#xA;WHERE PackageName = ? AND SourceName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="128" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch"
+          TopLeft="75,83" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\SC - AnatomyBodyPartItem\SQL - Truncate Branch"
+          TopLeft="97,7" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\SC - AnatomyBodyPartItem\SQL - Update LastRun,Status"
+          TopLeft="46,176" />
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem.PrecedenceConstraints[Constraint]"
+          TopLeft="167.5,125">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9.5,51"
+              Start="0,0"
+              End="-9.5,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.5"
+                    Point2="0,25.5"
+                    Point3="-4,25.5" />
+                  <mssgle:LineSegment
+                    End="-5.5,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5.5,25.5"
+                    Point2="-9.5,25.5"
+                    Point3="-9.5,29.5" />
+                  <mssgle:LineSegment
+                    End="-9.5,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem.PrecedenceConstraints[Constraint 1]"
+          TopLeft="193,49">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-25.5,34"
+              Start="0,0"
+              End="-25.5,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13"
+                    Point2="0,17"
+                    Point3="-4,17" />
+                  <mssgle:LineSegment
+                    End="-21.5,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-21.5,17"
+                    Point2="-25.5,17"
+                    Point3="-25.5,21" />
+                  <mssgle:LineSegment
+                    End="-25.5,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="335,273"
+          Size="335,316"
+          Id="Package\SC - AnatomyBodyPartItem"
+          TopLeft="180,215" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\SQL - Extract_Branch"
+          TopLeft="239,117" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\SQL - Extract_Branch - End"
+          TopLeft="201,573" />
+        <NodeLayout
+          Size="307,47"
+          Id="Package\SQL - Get LastRun and CurrentTime - Start"
+          TopLeft="183,11" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="334.25,58">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59"
+              Start="0,0"
+              End="0,51.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,17.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="332,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="15.5,56"
+              Start="0,0"
+              End="15.5,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24"
+                    Point2="0,28"
+                    Point3="4,28" />
+                  <mssgle:LineSegment
+                    End="11.5,28" />
+                  <mssgle:CubicBezierSegment
+                    Point1="11.5,28"
+                    Point2="15.5,28"
+                    Point3="15.5,32" />
+                  <mssgle:LineSegment
+                    End="15.5,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="347.5,531">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-39,42"
+              Start="0,0"
+              End="-39,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17"
+                    Point2="0,21"
+                    Point3="-4,21" />
+                  <mssgle:LineSegment
+                    End="-35,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-35,21"
+                    Point2="-39,21"
+                    Point3="-39,25" />
+                  <mssgle:LineSegment
+                    End="-39,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="232,42"
+          Id="Package.EventHandlers[OnError]\SQL - Extract_Enum - ErrorLog"
+          TopLeft="178,71" />
+        <NodeLayout
+          Size="238,42"
+          Id="Package.EventHandlers[OnError]\SQL - Extract_Enum - FailStatus"
+          TopLeft="558,79" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="161,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Data Conversion"
+          TopLeft="245,269" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Derived Column"
+          TopLeft="252,178" />
+        <NodeLayout
+          Size="133,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\Row Count"
+          TopLeft="257,381" />
+        <NodeLayout
+          Size="375,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination"
+          TopLeft="134,529" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source"
+          TopLeft="224,51" />
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[ADO NET Source Output]"
+          TopLeft="307,93">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24,85"
+              Start="0,0"
+              End="24,77.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.5"
+                    Point2="0,42.5"
+                    Point3="4,42.5" />
+                  <mssgle:LineSegment
+                    End="20,42.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20,42.5"
+                    Point2="24,42.5"
+                    Point3="24,46.5" />
+                  <mssgle:LineSegment
+                    End="24,77.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Row Count Output 1]"
+          TopLeft="322.5,423">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106"
+              Start="0,0"
+              End="0,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Derived Column Output]"
+          TopLeft="328.25,220">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49"
+              Start="0,0"
+              End="0,41.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch.Paths[Data Conversion Output]"
+          TopLeft="324.5,311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70"
+              Start="0,0"
+              End="0,62.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC - AnatomyBodyPartItem\DF - Staging - Branch\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

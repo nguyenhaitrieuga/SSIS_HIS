@@ -1,0 +1,239 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/9/2021 2:35:23 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QJCKCTC"
+  DTS:CreatorName="DESKTOP-QJCKCTC\Admin"
+  DTS:DTSID="{E6305DA2-9324-475A-8D98-7C079C8801E3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.152"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package2"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{F8DC7C80-139E-4CFC-AE94-25D40DA5B36E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[10.96.21.130\PRODDW.PROD_Data.dba1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{55D313E7-9E2E-4908-B92D-7C70C5143150}"
+      DTS:ObjectName="10.96.21.130\PRODDW.PROD_Data.dba1">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::PROD_Data]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_Data;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[10.97.11.50.etl_readonly]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{43CF3306-21A7-4754-BF6C-A2D1F54041E9}"
+      DTS:ObjectName="10.97.11.50.etl_readonly">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_HIS]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.97.11.50;Uid=etl_readonly;Port=3306;Database=pos;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{052D1A8D-2691-40CD-9EEC-A2D243194158}"
+      DTS:ObjectName="excel_dir">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{AC2E7085-8F02-486A-8FF5-5CF598675718}"
+      DTS:ObjectName="PROD_Data">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Data;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{816C5406-CDBF-4B78-9538-1C2B822F2DCA}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.97.11.50;Port=3306;Database=pos;Uid=etl_readonly;Pwd=HhNYgmpACcsLQHv1;</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{16F8E163-8475-4658-B18F-AA71195A2BC9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;select * from pos.PrepayCard where 0 = 1&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmd">
+      <DTS:VariableValue
+        DTS:DataType="8">select * from pos.PrepayCard where 0 = 1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\E_External_ViewChiPhiNhanSu"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="E_External_ViewChiPhiNhanSu"
+      DTS:DTSID="{798B075F-04B2-41EC-8A01-5892E1A0DBCC}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="E_External_ViewChiPhiNhanSu"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>E_External_ViewChiPhiNhanSu.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\E_External_ViewKQKDVanHanh"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="E_External_ViewKQKDVanHanh"
+      DTS:DTSID="{3A08374C-6821-48FD-BEF2-1B686EE24752}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="E_External_ViewKQKDVanHanh"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>E_External_ViewKQKDVanHanh.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\E_External_ViewMonthlyKPI"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="E_External_ViewMonthlyKPI"
+      DTS:DTSID="{C586BDF0-286C-49DC-A223-CD5F1F3EE39C}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="E_External_ViewMonthlyKPI"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>E_External_ViewMonthlyKPI.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>excel_dir</ParameterName>
+            <BindedVariableOrParameterName>$Package::excel_dir</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7C8C1960-36F3-4F34-ACFB-A4A6D8B4141F}"
+      DTS:From="Package\E_External_ViewMonthlyKPI"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\E_External_ViewKQKDVanHanh" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{96EC4712-C950-49D5-8128-94174E9E3682}"
+      DTS:From="Package\E_External_ViewKQKDVanHanh"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\E_External_ViewChiPhiNhanSu" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="235.2,41.6"
+          Id="Package\E_External_ViewChiPhiNhanSu"
+          TopLeft="300,393" />
+        <NodeLayout
+          Size="240,41.6"
+          Id="Package\E_External_ViewKQKDVanHanh"
+          TopLeft="296,245" />
+        <NodeLayout
+          Size="211.2,41.6"
+          Id="Package\E_External_ViewMonthlyKPI"
+          TopLeft="305,132" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="413.3,173.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,71.4"
+              Start="0,0"
+              End="0,63.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="416.75,287">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106"
+              Start="0,0"
+              End="0,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

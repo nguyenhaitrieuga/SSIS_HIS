@@ -1,0 +1,1641 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/11/2021 3:27:16 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QJCKCTC"
+  DTS:CreatorName="DESKTOP-QJCKCTC\Admin"
+  DTS:DTSID="{6C4127FC-8D29-4AC5-B452-14269BC5B7EC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="E_HIS_ViewOperationReport"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="139"
+  DTS:VersionGUID="{7E7D3BCF-66A9-4BC9-AFB6-704F16E77598}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[10.96.11.25.in.ticketuser]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{91D37CDC-99AB-41ED-86F9-9E93F161D610}"
+      DTS:ObjectName="10.96.11.25.in.ticketuser">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_Demo_thanh]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.96.11.25;Uid=phong.vo;Port=3306;Database=demo_thanh;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ETLControl]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DD311BF8-7636-4127-9A1B-5A0E1FBD1F16}"
+      DTS:ObjectName="ETLControl">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::ETLControl]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_ETLControl;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PROD_Data]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{962795FF-3FA1-45CE-AFFA-3689BDACD95B}"
+      DTS:ObjectName="PROD_Data">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::PRODDW_Data]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_Data;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source_HIS]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{7A95A405-EAF0-4EAE-B0BC-968BC0F6B51E}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_HIS]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.97.11.50;Uid=etl_readonly;Port=3306;Database=pos;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Source_HR]"
+      DTS:CreationName="ADO.NET:MySql.Data.MySqlClient.MySqlConnection, MySql.Data, Version=8.0.25.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"
+      DTS:DTSID="{FF731219-00E6-4839-9047-FC8C8CCFCC72}"
+      DTS:ObjectName="Source_HR">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Source_HR]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=10.96.11.25;Uid=ticketuser;Port=3306;Database=in;">
+          <DTS:Password
+            DTS:Name="Pwd"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Staging]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7804E57E-9CD9-4BEA-9F2F-A8BC4FCABBD6}"
+      DTS:ObjectName="Staging">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Package::Staging]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Initial Catalog=PROD_Staging;Password =12345678 ;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{0C734127-0462-42D9-A9D5-CA44F9E86223}"
+      DTS:ObjectName="ETLControl">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_ETLControl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{9CC1FBCE-D749-43BD-9C77-2985EF6A8977}"
+      DTS:ObjectName="ExtractSeq">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">123</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{B47AEF21-F901-4B81-BECD-0E1A814741D9}"
+      DTS:ObjectName="PRODDW_Data">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Data;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{47DDB960-BD22-4024-AF96-C741FB337AF5}"
+      DTS:ObjectName="SourceName">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">HIS</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{4A5E1D32-3383-47DB-A583-C052FA252951}"
+      DTS:ObjectName="Source_Demo_thanh">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=demo_thanh;Uid=phong.vo;Pwd=Phong@2021;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{5BD4286D-B87B-4725-B659-90CC65DAAB54}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.97.11.50;Port=3306;Database=pos;Uid=etl_readonly;Pwd=HhNYgmpACcsLQHv1;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{ADBC35AA-713F-4FE4-99F9-E417910DAAF0}"
+      DTS:ObjectName="Source_HR">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=in;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{DEF00696-04E1-4AB7-9D74-F5FC5807D872}"
+      DTS:ObjectName="Staging">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Staging;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{06216155-833A-4462-AA18-DB6AE575E09C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Deleted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7B423A61-BE21-4EA8-A50E-0518AF2CC8AA}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ExtractSeq] != @[User::LastExtractSeq]?&quot;Package Ended&quot;:&quot;Package Ended.No work done!&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="EndPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Ended</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{94B050C2-9337-4041-BDD2-092620290028}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ErrorPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Error</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AF9424A0-F51F-4AB9-8874-CB3E86CA2478}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::ExtractSeq]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ExtractSeq">
+      <DTS:VariableValue
+        DTS:DataType="8">123</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0091BFDC-E5B6-4298-BEB2-E6E89707919D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Inserted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{042FADE8-EEC0-4725-8385-541B4AA787E5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="IsActive">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F8E2B1C2-E635-4499-82ED-E77319DDCAEC}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastExtractSeq">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F0905B01-2469-47AF-9082-5938A346DD3F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="LastRun">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F85E8BEC-A78E-4EDA-96C5-556FEA0DD4D4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MaxRowId">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5F26103B-ED83-41DA-922F-775E5C1C871C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="MinRowId">
+      <DTS:VariableValue
+        DTS:DataType="20">4000</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F060995-D635-44DE-80A8-27A44F0D57D9}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[System::PackageName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PackageName">
+      <DTS:VariableValue
+        DTS:DataType="8">E_HIS_ViewOperationReport</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A4713823-9841-4722-B8F9-20C15799AD77}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="60000"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="PageSize">
+      <DTS:VariableValue
+        DTS:DataType="3">60000</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CF2CD8E9-6BEF-4942-8490-35704560183D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::SourceName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceName">
+      <DTS:VariableValue
+        DTS:DataType="8">HIS</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{236555AF-292A-495D-98EE-79103E9D572B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;select * from demo_thanh.ViewDoctorSalary;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQLCmd">
+      <DTS:VariableValue
+        DTS:DataType="8">select * from demo_thanh.ViewDoctorSalary;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A1828965-4FBB-4CE5-A189-C3980E7C1A88}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="StartPkgNote">
+      <DTS:VariableValue
+        DTS:DataType="8">Package Started</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B09A5F96-1FFF-4BC9-A242-22F03AB04EA2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="TempInserted">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2EAB19D5-FD3E-4B89-815F-673AB173D155}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Updated">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2C994960-CFDE-41F6-B062-F9D518E7B591}"
+      DTS:EvaluateAsExpression="True"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{88775E1A-A88B-439A-8D69-6A6AA437BED0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="vMax">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3FD0D891-F2D3-4DFA-9DD0-7D088D2AB344}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="vMin">
+      <DTS:VariableValue
+        DTS:DataType="20">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{863EA347-D519-4E90-BC9D-FE8323131C58}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4) LEFT (@[User::__Param__FirstDayOfMonth],4) + &quot;-&quot; + SUBSTRING(@[User::__Param__FirstDayOfMonth],6,2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="__Param_Month">
+      <DTS:VariableValue
+        DTS:DataType="8">2020-12</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F68E2F45-8381-4AD9-9BE9-0CF0F7950148}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="__Param__FirstDayOfMonth">
+      <DTS:VariableValue
+        DTS:DataType="8">2020-12-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7B48FF81-891D-4874-9C97-CFC3E53AE777}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4)YEAR(DATEADD(&quot;DAY&quot;,-1,GETDATE())) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_WSTR, 2)MONTH(DATEADD(&quot;DAY&quot;,-1,GETDATE())),2) + &quot;-01&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="__Param__FirstDayOfMonth_Backup1">
+      <DTS:VariableValue
+        DTS:DataType="8">2021-07-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{392C50BE-F0EA-49AC-B6BB-3C01DF9785E8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="__Param__LastDayOfMonth">
+      <DTS:VariableValue
+        DTS:DataType="8">2021-01-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{46DF2677-ECB1-4FFF-B9DF-3FF401AE700D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4)YEAR(GETDATE()) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_WSTR, 2)MONTH(GETDATE()),2) + &quot;-&quot;  + RIGHT(&quot;0&quot; + (DT_WSTR, 2)DAY(GETDATE()),2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="__Param__LastDayOfMonth_Backup1">
+      <DTS:VariableValue
+        DTS:DataType="8">2021-07-16</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SC - AppointmentHistory"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{523B77F3-A200-4333-AE54-AA349577539A}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SC - AppointmentHistory">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{F77202AE-0B9D-4FC7-BBAB-AFA4A0DE914C}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DF - Staging - AppointmentHistory"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:PropertyExpression
+            DTS:Name="[ADO NET Source].[SqlCommand]">@[User::SQLCmd]</DTS:PropertyExpression>
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+                  name="ADO NET Source"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement used by the component to extract data."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from demo_thanh.ViewDoctorSalary;</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">30</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                      name="AllowImplicitStringConversion">true</property>
+                    <property
+                      dataType="System.String"
+                      description="The Source database table name."
+                      expressionType="Notify"
+                      name="TableOrViewName"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the mode to retrieve external column information"
+                      name="AccessMode"
+                      typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Connections[IDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[10.96.11.25.in.ticketuser]"
+                      connectionManagerRefId="Package.ConnectionManagers[10.96.11.25.in.ticketuser]"
+                      description="Managed connection manager"
+                      name="IDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output]"
+                      name="ADO NET Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[month]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[month]"
+                          length="7"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[month]"
+                          name="month"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorCode]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DoctorCode]"
+                          length="16"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorCode]"
+                          name="DoctorCode"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DoctorName]"
+                          length="64"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorName]"
+                          name="DoctorName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_DoanhThu]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_DoanhThu]"
+                          name="TQ_DoanhThu"
+                          precision="34"
+                          scale="1"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapTuVan]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuNhapTuVan]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapTuVan]"
+                          name="TQ_ThuNhapTuVan"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuLaoDieuTri]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuLaoDieuTri]"
+                          name="TQ_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapHTCM]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuNhapHTCM]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapHTCM]"
+                          name="TQ_ThuNhapHTCM"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_TQ_ThuNhap]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_TQ_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_TQ_ThuNhap]"
+                          name="Total_TQ_ThuNhap"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_DoanhThu]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_DoanhThu]"
+                          name="CN_DoanhThu"
+                          precision="38"
+                          scale="1"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapTuVan]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuNhapTuVan]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapTuVan]"
+                          name="CN_ThuNhapTuVan"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuLaoDieuTri]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuLaoDieuTri]"
+                          name="CN_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapHTCM]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuNhapHTCM]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapHTCM]"
+                          name="CN_ThuNhapHTCM"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_CN_ThuNhap]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_CN_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_CN_ThuNhap]"
+                          name="Total_CN_ThuNhap"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_DoanhThu]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_DoanhThu]"
+                          name="Total_DoanhThu"
+                          precision="38"
+                          scale="1"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_ThuNhap]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_ThuNhap]"
+                          name="Total_ThuNhap"
+                          precision="38"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[month]"
+                          dataType="wstr"
+                          length="7"
+                          name="month" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DoctorCode]"
+                          dataType="wstr"
+                          length="16"
+                          name="DoctorCode" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[DoctorName]"
+                          dataType="wstr"
+                          length="64"
+                          name="DoctorName" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_DoanhThu]"
+                          dataType="numeric"
+                          name="TQ_DoanhThu"
+                          precision="34"
+                          scale="1" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuNhapTuVan]"
+                          dataType="numeric"
+                          name="TQ_ThuNhapTuVan"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          name="TQ_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[TQ_ThuNhapHTCM]"
+                          dataType="numeric"
+                          name="TQ_ThuNhapHTCM"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_TQ_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_TQ_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_DoanhThu]"
+                          dataType="numeric"
+                          name="CN_DoanhThu"
+                          precision="38"
+                          scale="1" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuNhapTuVan]"
+                          dataType="numeric"
+                          name="CN_ThuNhapTuVan"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          name="CN_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[CN_ThuNhapHTCM]"
+                          dataType="numeric"
+                          name="CN_ThuNhapHTCM"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_CN_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_CN_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_DoanhThu]"
+                          dataType="numeric"
+                          name="Total_DoanhThu"
+                          precision="38"
+                          scale="1" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[Total_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                      isErrorOut="true"
+                      name="ADO NET Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[month]"
+                          dataType="wstr"
+                          length="7"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[month]"
+                          name="month" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DoctorCode]"
+                          dataType="wstr"
+                          length="16"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DoctorCode]"
+                          name="DoctorCode" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DoctorName]"
+                          dataType="wstr"
+                          length="64"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[DoctorName]"
+                          name="DoctorName" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_DoanhThu]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_DoanhThu]"
+                          name="TQ_DoanhThu"
+                          precision="34"
+                          scale="1" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuNhapTuVan]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuNhapTuVan]"
+                          name="TQ_ThuNhapTuVan"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuLaoDieuTri]"
+                          name="TQ_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuNhapHTCM]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[TQ_ThuNhapHTCM]"
+                          name="TQ_ThuNhapHTCM"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_TQ_ThuNhap]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_TQ_ThuNhap]"
+                          name="Total_TQ_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_DoanhThu]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_DoanhThu]"
+                          name="CN_DoanhThu"
+                          precision="38"
+                          scale="1" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuNhapTuVan]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuNhapTuVan]"
+                          name="CN_ThuNhapTuVan"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuLaoDieuTri]"
+                          name="CN_ThuLaoDieuTri"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuNhapHTCM]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[CN_ThuNhapHTCM]"
+                          name="CN_ThuNhapHTCM"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_CN_ThuNhap]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_CN_ThuNhap]"
+                          name="Total_CN_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_DoanhThu]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_DoanhThu]"
+                          name="Total_DoanhThu"
+                          precision="38"
+                          scale="1" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_ThuNhap]"
+                          dataType="numeric"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[Total_ThuNhap]"
+                          name="Total_ThuNhap"
+                          precision="38"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[report].[ViewDoctorSalary]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[PROD_Data]"
+                      connectionManagerRefId="Package.ConnectionManagers[PROD_Data]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DoctorCode]"
+                          cachedDataType="wstr"
+                          cachedLength="16"
+                          cachedName="DoctorCode"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DoctorCode]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorCode]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DoctorName]"
+                          cachedDataType="wstr"
+                          cachedLength="64"
+                          cachedName="DoctorName"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DoctorName]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[DoctorName]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[month]"
+                          cachedDataType="wstr"
+                          cachedLength="7"
+                          cachedName="month"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[month]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[month]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TQ_DoanhThu]"
+                          cachedDataType="numeric"
+                          cachedName="TQ_DoanhThu"
+                          cachedPrecision="34"
+                          cachedScale="1"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_DoanhThu]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TQ_ThuNhapTuVan]"
+                          cachedDataType="numeric"
+                          cachedName="TQ_ThuNhapTuVan"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuNhapTuVan]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapTuVan]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TQ_ThuLaoDieuTri]"
+                          cachedDataType="numeric"
+                          cachedName="TQ_ThuLaoDieuTri"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuLaoDieuTri]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuLaoDieuTri]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TQ_ThuNhapHTCM]"
+                          cachedDataType="numeric"
+                          cachedName="TQ_ThuNhapHTCM"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuNhapHTCM]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[TQ_ThuNhapHTCM]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total_TQ_ThuNhap]"
+                          cachedDataType="numeric"
+                          cachedName="Total_TQ_ThuNhap"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_TQ_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_TQ_ThuNhap]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CN_DoanhThu]"
+                          cachedDataType="numeric"
+                          cachedName="CN_DoanhThu"
+                          cachedPrecision="38"
+                          cachedScale="1"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_DoanhThu]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CN_ThuNhapTuVan]"
+                          cachedDataType="numeric"
+                          cachedName="CN_ThuNhapTuVan"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuNhapTuVan]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapTuVan]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CN_ThuLaoDieuTri]"
+                          cachedDataType="numeric"
+                          cachedName="CN_ThuLaoDieuTri"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuLaoDieuTri]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuLaoDieuTri]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CN_ThuNhapHTCM]"
+                          cachedDataType="numeric"
+                          cachedName="CN_ThuNhapHTCM"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuNhapHTCM]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[CN_ThuNhapHTCM]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total_CN_ThuNhap]"
+                          cachedDataType="numeric"
+                          cachedName="Total_CN_ThuNhap"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_CN_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_CN_ThuNhap]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total_DoanhThu]"
+                          cachedDataType="numeric"
+                          cachedName="Total_DoanhThu"
+                          cachedPrecision="38"
+                          cachedScale="1"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_DoanhThu]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_DoanhThu]" />
+                        <inputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Total_ThuNhap]"
+                          cachedDataType="numeric"
+                          cachedName="Total_ThuNhap"
+                          cachedPrecision="38"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_ThuNhap]"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output].Columns[Total_ThuNhap]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DoctorCode]"
+                          dataType="wstr"
+                          length="30"
+                          name="DoctorCode" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DoctorName]"
+                          dataType="wstr"
+                          length="150"
+                          name="DoctorName" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[month]"
+                          dataType="wstr"
+                          length="10"
+                          name="month" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_DoanhThu]"
+                          dataType="numeric"
+                          name="TQ_DoanhThu"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuNhapTuVan]"
+                          dataType="numeric"
+                          name="TQ_ThuNhapTuVan"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          name="TQ_ThuLaoDieuTri"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TQ_ThuNhapHTCM]"
+                          dataType="numeric"
+                          name="TQ_ThuNhapHTCM"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_TQ_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_TQ_ThuNhap"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_DoanhThu]"
+                          dataType="numeric"
+                          name="CN_DoanhThu"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuNhapTuVan]"
+                          dataType="numeric"
+                          name="CN_ThuNhapTuVan"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuLaoDieuTri]"
+                          dataType="numeric"
+                          name="CN_ThuLaoDieuTri"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CN_ThuNhapHTCM]"
+                          dataType="numeric"
+                          name="CN_ThuNhapHTCM"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_CN_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_CN_ThuNhap"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_DoanhThu]"
+                          dataType="numeric"
+                          name="Total_DoanhThu"
+                          precision="24"
+                          scale="4" />
+                        <externalMetadataColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Total_ThuNhap]"
+                          dataType="numeric"
+                          name="Total_ThuNhap"
+                          precision="24"
+                          scale="4" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count"
+                  componentClassID="Microsoft.RowCount"
+                  contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+                  name="Row Count">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable to hold the row count."
+                      name="VariableName">User::TempInserted</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count.Inputs[Row Count Input 1]"
+                      hasSideEffects="true"
+                      name="Row Count Input 1">
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count.Outputs[Row Count Output 1]"
+                      name="Row Count Output 1"
+                      synchronousInputId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count.Inputs[Row Count Input 1]">
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory.Paths[ADO NET Source Output]"
+                  endId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count.Inputs[Row Count Input 1]"
+                  name="ADO NET Source Output"
+                  startId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source.Outputs[ADO NET Source Output]" />
+                <path
+                  refId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory.Paths[Row Count Output 1]"
+                  endId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Row Count Output 1"
+                  startId="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count.Outputs[Row Count Output 1]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - AppointmentHistory\SQL - DeleteMonthReport"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6D856928-A43F-42D2-941D-A6E8ABBE5780}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - DeleteMonthReport"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{962795FF-3FA1-45CE-AFFA-3689BDACD95B}"
+              SQLTask:SqlStatementSource="delete [report].[ViewDoctorSalary]&#xA; where month = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::__Param_Month"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - AppointmentHistory\SQL - Run Store"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{DAEE9BE0-2B30-440B-B289-E0204B85BEF6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Run Store"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{91D37CDC-99AB-41ED-86F9-9E93F161D610}"
+              SQLTask:SqlStatementSource="call demo_thanh.usp_Report_Doctor_Revenue_SSIS(?,?)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::__Param__FirstDayOfMonth"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="16"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::__Param__LastDayOfMonth"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="16"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - AppointmentHistory.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{0511ACBB-6379-4D2C-9449-1ABB977DD8D4}"
+          DTS:From="Package\SC - AppointmentHistory\SQL - DeleteMonthReport"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - AppointmentHistory.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{AEBADDBC-119D-4D4C-B22D-FB4AD470DE8B}"
+          DTS:From="Package\SC - AppointmentHistory\SQL - Run Store"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\SC - AppointmentHistory\SQL - DeleteMonthReport" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:EventHandlers>
+    <DTS:EventHandler
+      DTS:refId="Package.EventHandlers[OnError]"
+      DTS:CreationName="OnError"
+      DTS:DTSID="{28EFCDB2-CC3F-4752-AD0E-39BA9B998C13}"
+      DTS:EventID="410"
+      DTS:EventName="OnError"
+      DTS:LocaleID="-1">
+      <DTS:Variables>
+        <DTS:Variable
+          DTS:CreationName=""
+          DTS:Description="The propagate property of the event"
+          DTS:DTSID="{0EE13945-FF6E-454F-8C63-AE4C751203B9}"
+          DTS:IncludeInDebugDump="6789"
+          DTS:Namespace="System"
+          DTS:ObjectName="Propagate">
+          <DTS:VariableValue
+            DTS:DataType="11">-1</DTS:VariableValue>
+        </DTS:Variable>
+      </DTS:Variables>
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL - Extract_Enum - ErrorLog"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{BCCB484E-A11D-4A10-B964-7D39BB4FBD43}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Extract_Enum - ErrorLog"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{DD311BF8-7636-4127-9A1B-5A0E1FBD1F16}"
+              SQLTask:SqlStatementSource="INSERT INTO [dbo].[ExtractCtrlLog]&#xA;           (&#xA;    [PackageName]&#xA;    ,[SourceName]&#xA;    ,[EndTime]&#xA;    ,[Status]&#xA;    ,[Inserted]&#xA;    ,[Updated]&#xA;    ,[Deleted]&#xA;    ,[ExtractSeq]&#xA;    ,ErrorMessage&#xA;    ,Note&#x9;&#xA;   )&#xA;     VALUES&#xA;           (&#xA;    ?&#xA;    ,?&#xA;    ,GETDATE()&#xA;    ,'F'&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;    ,?&#xA;     )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="128" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="2"
+                SQLTask:DtsVariableName="User::Inserted"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="3"
+                SQLTask:DtsVariableName="User::Updated"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="4"
+                SQLTask:DtsVariableName="User::Deleted"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="5"
+                SQLTask:DtsVariableName="User::ExtractSeq"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="20" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="6"
+                SQLTask:DtsVariableName="System::ErrorDescription"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="4000" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="7"
+                SQLTask:DtsVariableName="User::StartPkgNote"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="3"
+                SQLTask:ParameterSize="250" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package.EventHandlers[OnError]\SQL - Extract_Enum - FailStatus"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{0C3946D1-0E12-415A-B375-30D87E9F8A1A}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL - Extract_Enum - FailStatus"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{DD311BF8-7636-4127-9A1B-5A0E1FBD1F16}"
+              SQLTask:SqlStatementSource="UPDATE [dbo].[ExtractCtrl]&#xA;SET LastStatus = 'F'&#xA;WHERE PackageName = ? AND SourceName = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="System::PackageName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="128" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::SourceName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="50" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:EventHandler>
+  </DTS:EventHandlers>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="246,42"
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory"
+          TopLeft="54.75,178.75" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\SC - AppointmentHistory\SQL - DeleteMonthReport"
+          TopLeft="66,104.5" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\SC - AppointmentHistory\SQL - Run Store"
+          TopLeft="60,22" />
+        <EdgeLayout
+          Id="Package\SC - AppointmentHistory.PrecedenceConstraints[Constraint]"
+          TopLeft="178.875,146.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.25"
+              Start="0,0"
+              End="0,24.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AppointmentHistory.PrecedenceConstraints[Constraint 2]"
+          TopLeft="177,64">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.5"
+              Start="0,0"
+              End="0,33">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="337,287"
+          Size="337,330"
+          Id="Package\SC - AppointmentHistory"
+          TopLeft="436,240" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <DtsEventHandler
+    design-time-name="Package.EventHandlers[OnError]">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="232,42"
+          Id="Package.EventHandlers[OnError]\SQL - Extract_Enum - ErrorLog"
+          TopLeft="178,71" />
+        <NodeLayout
+          Size="238,42"
+          Id="Package.EventHandlers[OnError]\SQL - Extract_Enum - FailStatus"
+          TopLeft="558,79" />
+      </GraphLayout>
+    </LayoutInfo>
+  </DtsEventHandler>
+  <TaskHost
+    design-time-name="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="133,42"
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\Row Count"
+          TopLeft="335,321" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination"
+          TopLeft="344,450" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source"
+          TopLeft="308,81" />
+        <EdgeLayout
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory.Paths[Row Count Output 1]"
+          TopLeft="401.5,363">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,87"
+              Start="0,0"
+              End="31,79.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39.5"
+                    Point2="0,43.5"
+                    Point3="4,43.5" />
+                  <mssgle:LineSegment
+                    End="27,43.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27,43.5"
+                    Point2="31,43.5"
+                    Point3="31,47.5" />
+                  <mssgle:LineSegment
+                    End="31,79.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory.Paths[ADO NET Source Output]"
+          TopLeft="391,123">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.5,198"
+              Start="0,0"
+              End="10.5,190.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,95" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,95"
+                    Point2="0,99"
+                    Point3="4,99" />
+                  <mssgle:LineSegment
+                    End="6.5,99" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.5,99"
+                    Point2="10.5,99"
+                    Point3="10.5,103" />
+                  <mssgle:LineSegment
+                    End="10.5,190.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SC - AppointmentHistory\DF - Staging - AppointmentHistory\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

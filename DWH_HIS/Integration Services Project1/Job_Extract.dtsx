@@ -1,0 +1,965 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/17/2021 11:00:05 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QJCKCTC"
+  DTS:CreatorName="DESKTOP-QJCKCTC\Admin"
+  DTS:DTSID="{DD2D2145-F11B-4F27-9CE8-70104FA74376}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="38"
+  DTS:VersionGUID="{B7ACDB1B-5517-4838-BCF9-75F478EBB211}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{22BB886D-5CF6-4B3F-A4C4-44D094970CFC}"
+      DTS:ObjectName="ETLControl">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_ETLControl;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{3A3804E1-D12F-448F-946E-846DC5496B39}"
+      DTS:ObjectName="ExtractSeq">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">123</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="7"
+      DTS:DTSID="{242EEAD2-F150-4FD4-A931-7CC2FBB8E088}"
+      DTS:ObjectName="Month">
+      <DTS:Property
+        DTS:DataType="7"
+        DTS:Name="ParameterValue">6/20/2021</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{D00ABDEE-6090-4A9E-B93E-06E7FBD9B495}"
+      DTS:ObjectName="PRODDW_Data">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Data;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{67DBD04B-D9F7-43D3-8965-6B75F9920C7E}"
+      DTS:ObjectName="Source_CRM">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.21.110;Port=3306;Database=aicrm;Uid=phong.vo;Pwd=DBphong.vo@123;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{30FDD917-D204-49C8-9BF8-961221100E2D}"
+      DTS:ObjectName="Source_Demo_thanh">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=Demo_thanh;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{2D8F5B00-BA45-4754-ABE6-127DF37841B6}"
+      DTS:ObjectName="Source_HIS">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=pos;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{6AE9A21D-A2D6-42AB-AF0C-652DA6847455}"
+      DTS:ObjectName="Source_HR">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Server=10.96.11.25;Port=3306;Database=in;Uid=ticketuser;Pwd=ticketuser@2020;</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{9667F073-8A30-4E83-AEAF-A1BDEF7B305F}"
+      DTS:ObjectName="Staging">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">Data Source=10.96.21.130\PRODDW,1433;User ID=dba1;Password =12345678 ;Initial Catalog=PROD_Staging;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2341E7AF-BD47-45DB-A00A-7AB7A2871156}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4)(YEAR(DATEADD(&quot;mm&quot;, -1, @[$Package::Month]  ))) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_WSTR, 2)(MONTH( @[$Package::Month])),2) + &quot;-01&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Month_From">
+      <DTS:VariableValue
+        DTS:DataType="8">2021-06-01</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D4048CEC-6F3F-440E-A372-B5EB10FFBE3E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_WSTR, 4)(YEAR(DATEADD(&quot;mm&quot;, -1, @[$Package::Month]  ))) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_WSTR, 2)(MONTH(DATEADD(&quot;mm&quot;, 1, @[$Package::Month]))),2) + &quot;-01&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Month_To">
+      <DTS:VariableValue
+        DTS:DataType="8">2021-07-01</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\SC - Extract - MiAnLien Group"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{F46F8B95-2AF5-4AB6-8CFF-3889C17139A1}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SC - Extract - MiAnLien Group">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_AppointmentHistory_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{387CDB89-6A5D-4BF6-8174-DDA4C9BD295A}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_AppointmentHistory_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_AppointmentHistory_MiAnLien.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_ArisingReport_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{E6B1A199-8E40-4EB6-86A2-B8E528F7AEBB}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_ArisingReport_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_ArisingReport_MiAnLien.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_Customer_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{4F5028FA-95C7-4EBF-93DC-C9FDFA4C9BA1}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_Customer_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_Customer_MiAnLien.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Project::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_LeadPerformance"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{5e9d53d9-12d1-4266-b021-908643e288c4}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_LeadPerformance"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_LeadPerformance.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_CRM</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_CRM</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_OrderDetail_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{200DD1D2-87F7-4874-B8BF-05326052C33C}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_OrderDetail_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_OrderDetail_MiAnLien.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_Receipt_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:Disabled="True"
+          DTS:DTSID="{22da25be-283a-42b5-bb8b-202e719ddd0b}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_Receipt_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_Receipt_MiAnLien.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_ViewAppointmentInfo"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="E_HIS_ViewAppointmentInfo"
+          DTS:DTSID="{0E79A046-98B8-48C8-9049-4F1D3389D955}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_ViewAppointmentInfo"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_ViewAppointmentInfo.dtsx</PackageName>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_ViewDoctorSalary"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="E_HIS_ViewDoctorSalary"
+          DTS:DTSID="{1649b4fe-b7d2-4f28-84df-efa3c7de4d98}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_ViewDoctorSalary"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_ViewDoctorSalary.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Month</ParameterName>
+                <BindedVariableOrParameterName>$Package::Month</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_CRM</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_CRM</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_ViewLeadReport_MiAnLien"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{1538acef-5104-407e-abf9-5ec25010d88d}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_ViewLeadReport_MiAnLien"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_ViewLeadReport.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\SC - Extract - MiAnLien Group\E_HIS_ViewOperationReport"
+          DTS:CreationName="Microsoft.ExecutePackageTask"
+          DTS:Description="Execute Package Task"
+          DTS:DTSID="{DD436E05-5A04-45A6-9E44-442FCF9D0562}"
+          DTS:ExecutableType="Microsoft.ExecutePackageTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="E_HIS_ViewOperationReport"
+          DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <ExecutePackageTask>
+              <UseProjectReference>True</UseProjectReference>
+              <PackageName>E_HIS_ViewOperationReport.dtsx</PackageName>
+              <ParameterAssignment>
+                <ParameterName>ETLControl</ParameterName>
+                <BindedVariableOrParameterName>$Package::ETLControl</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>ExtractSeq</ParameterName>
+                <BindedVariableOrParameterName>$Package::ExtractSeq</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Month</ParameterName>
+                <BindedVariableOrParameterName>$Package::Month</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>PRODDW_Data</ParameterName>
+                <BindedVariableOrParameterName>$Package::PRODDW_Data</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_CRM</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_CRM</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HIS</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HIS</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Source_HR</ParameterName>
+                <BindedVariableOrParameterName>$Package::Source_HR</BindedVariableOrParameterName>
+              </ParameterAssignment>
+              <ParameterAssignment>
+                <ParameterName>Staging</ParameterName>
+                <BindedVariableOrParameterName>$Package::Staging</BindedVariableOrParameterName>
+              </ParameterAssignment>
+            </ExecutePackageTask>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{485A3576-D64F-4515-AC43-A23AB662312A}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_Customer_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_AppointmentHistory_MiAnLien" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{FCCF83D0-6D6C-43B2-9F61-9B0C795CBC4F}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_AppointmentHistory_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_ArisingReport_MiAnLien" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{64E60B0B-F7A6-4C26-BC27-1FA7DD381658}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_ArisingReport_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_OrderDetail_MiAnLien" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{E2C3A74E-70C0-4A5B-B1DF-550DAA03ECB5}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_OrderDetail_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_Receipt_MiAnLien" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{5DF724D2-BBE5-4A19-B4A1-CB62652287AF}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_Receipt_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_LeadPerformance" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{E36025B4-D752-48C9-9C0A-875EF4EFA6D8}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_LeadPerformance"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_ViewLeadReport_MiAnLien" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{C48C127B-DD29-4C79-B766-D3A69C25E0EF}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_ViewLeadReport_MiAnLien"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_ViewOperationReport" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 7]"
+          DTS:CreationName=""
+          DTS:DTSID="{7BEF8857-00EB-433D-B8CD-891AAC3014F0}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_ViewOperationReport"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 7"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_ViewDoctorSalary" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 8]"
+          DTS:CreationName=""
+          DTS:DTSID="{F938E5F7-03DA-4EC6-A051-8D00514657D3}"
+          DTS:From="Package\SC - Extract - MiAnLien Group\E_HIS_ViewDoctorSalary"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 8"
+          DTS:To="Package\SC - Extract - MiAnLien Group\E_HIS_ViewAppointmentInfo" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="265,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_AppointmentHistory_MiAnLien"
+          TopLeft="106.636363636364,72.2272727272727" />
+        <NodeLayout
+          Size="236,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_ArisingReport_MiAnLien"
+          TopLeft="129.454545454545,138.409090909091" />
+        <NodeLayout
+          Size="217,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_Customer_MiAnLien"
+          TopLeft="118.272727272727,0.909090909090907" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_LeadPerformance"
+          TopLeft="152,360.5" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_OrderDetail_MiAnLien"
+          TopLeft="165,218.5" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_Receipt_MiAnLien"
+          TopLeft="146,289.5" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_ViewDoctorSalary"
+          TopLeft="192.545454545455,591.636363636364" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_ViewLeadReport_MiAnLien"
+          TopLeft="163,441.5" />
+        <NodeLayout
+          Size="191,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_ViewOperationReport"
+          TopLeft="181,507.5" />
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint]"
+          TopLeft="226.772727272727,42.9090909090909">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.3636363636363,29.3181818181818"
+              Start="0,0"
+              End="12.3636363636363,21.8181818181818">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.6590909090909" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.6590909090909"
+                    Point2="0,14.6590909090909"
+                    Point3="4,14.6590909090909" />
+                  <mssgle:LineSegment
+                    End="8.36363636363626,14.6590909090909" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.36363636363626,14.6590909090909"
+                    Point2="12.3636363636363,14.6590909090909"
+                    Point3="12.3636363636363,18.6590909090909" />
+                  <mssgle:LineSegment
+                    End="12.3636363636363,21.8181818181818" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 1]"
+          TopLeft="239.136363636364,114.227272727273">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.31818181818139,24.1818181818183"
+              Start="0,0"
+              End="8.31818181818139,16.6818181818183">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.09090909090915" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.09090909090915"
+                    Point2="0,12.0909090909092"
+                    Point3="4,12.0909090909092" />
+                  <mssgle:LineSegment
+                    End="4.31818181818139,12.0909090909092" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.31818181818139,12.0909090909092"
+                    Point2="8.31818181818139,12.0909090909092"
+                    Point3="8.31818181818139,16.0909090909092" />
+                  <mssgle:LineSegment
+                    End="8.31818181818139,16.6818181818183" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 2]"
+          TopLeft="247.454545454545,180.409090909091">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.045454545455,38.090909090909"
+              Start="0,0"
+              End="30.045454545455,30.590909090909">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.0454545454545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.0454545454545"
+                    Point2="0,19.0454545454545"
+                    Point3="4,19.0454545454545" />
+                  <mssgle:LineSegment
+                    End="26.045454545455,19.0454545454545" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.045454545455,19.0454545454545"
+                    Point2="30.045454545455,19.0454545454545"
+                    Point3="30.045454545455,23.0454545454545" />
+                  <mssgle:LineSegment
+                    End="30.045454545455,30.590909090909" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 3]"
+          TopLeft="277.5,260.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-19,29"
+              Start="0,0"
+              End="-19,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="-4,14.5" />
+                  <mssgle:LineSegment
+                    End="-15,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-15,14.5"
+                    Point2="-19,14.5"
+                    Point3="-19,18.5" />
+                  <mssgle:LineSegment
+                    End="-19,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 4]"
+          TopLeft="258.5,331.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.1666666666667,29"
+              Start="0,0"
+              End="-37.1666666666667,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.2645914396887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.2645914396887"
+                    Point2="0,17.2645914396887"
+                    Point3="-4,17.2645914396887" />
+                  <mssgle:LineSegment
+                    End="-33.1666666666667,17.2645914396887" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.1666666666667,17.2645914396887"
+                    Point2="-37.1666666666667,17.2645914396887"
+                    Point3="-37.1666666666667,21.2645914396887" />
+                  <mssgle:LineSegment
+                    End="-37.1666666666667,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 5]"
+          TopLeft="254,402.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.6666666666667,39"
+              Start="0,0"
+              End="-14.6666666666667,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2347749338041" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.2347749338041"
+                    Point2="0,23.2347749338041"
+                    Point3="-4,23.2347749338041" />
+                  <mssgle:LineSegment
+                    End="-10.6666666666667,23.2347749338041" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.6666666666667,23.2347749338041"
+                    Point2="-14.6666666666667,23.2347749338041"
+                    Point3="-14.6666666666667,27.2347749338041" />
+                  <mssgle:LineSegment
+                    End="-14.6666666666667,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 6]"
+          TopLeft="276,483.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 7]"
+          TopLeft="276.5,549.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.045454545455,42.136363636364"
+              Start="0,0"
+              End="18.045454545455,34.636363636364">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.068181818182" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.068181818182"
+                    Point2="0,21.068181818182"
+                    Point3="4,21.068181818182" />
+                  <mssgle:LineSegment
+                    End="14.045454545455,21.068181818182" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.045454545455,21.068181818182"
+                    Point2="18.045454545455,21.068181818182"
+                    Point3="18.045454545455,25.068181818182" />
+                  <mssgle:LineSegment
+                    End="18.045454545455,34.636363636364" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="221,42"
+          Id="Package\SC - Extract - MiAnLien Group\E_HIS_ViewAppointmentInfo"
+          TopLeft="619,585" />
+        <EdgeLayout
+          Id="Package\SC - Extract - MiAnLien Group.PrecedenceConstraints[Constraint 8]"
+          TopLeft="396.545454545455,609.318181818182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="222.454545454545,0"
+              Start="0,0"
+              End="214.954545454545,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="214.954545454545,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="923,694"
+          Size="923,737"
+          Id="Package\SC - Extract - MiAnLien Group"
+          TopLeft="149.545454545455,42.636363636364" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
